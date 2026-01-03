@@ -1,0 +1,103 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/AnimatePresence/Guide" />
+
+# AnimatePresence - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+On a deux idees simples:
+- un bouton change un etat `show`
+- un bloc apparait ou disparait selon `show`
+
+**Etapes logiques:**
+1. React affiche le bouton
+2. L'utilisateur clique -> `show` change
+3. Si `show` est vrai, le bloc est rendu
+4. Si `show` devient faux, AnimatePresence permet l'animation de sortie
+
+## 2. Concepts cles (mots simples)
+
+Imagine un rideau:
+- React decide si le rideau existe ou pas
+- Framer Motion decide comment il entre et comment il sort
+
+**React** controle l'existence du composant.  
+**Framer Motion** controle l'animation d'entree et de sortie.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: `show` passe a `true` -> le bloc est monte dans le DOM.
+- **Update**: si `show` change, React re-render.
+- **Unmount**: `show` passe a `false` -> React veut retirer le bloc,  
+  mais AnimatePresence retarde la suppression pour jouer `exit`.
+
+## 4. Raisonnement Framer Motion
+
+- `initial`: l'etat de depart (avant d'apparaitre)
+- `animate`: l'etat final (apres l'entree)
+- `exit`: l'etat de sortie (avant d'etre retire)
+- `AnimatePresence`: garde temporairement le composant pour jouer `exit`
+
+## 5. Erreurs et mauvaises pratiques
+
+Points a surveiller:
+- **Oublier `AnimatePresence`** -> l'animation de sortie ne joue pas.
+- **Oublier `key`** -> Framer Motion ne sait pas quel element sortir.
+- **Changer trop de choses en meme temps** -> animation confuse.
+
+Ici, le code est correct et respecte les bases.
+
+## 6. Version corrigee et optimisee (simple)
+
+Objectif: garder le code clair, sans complexite inutile.
+
+```tsx
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+
+export default function Example() {
+  const [show, setShow] = useState(true);
+
+  return (
+    <>
+      <button onClick={() => setShow((v) => !v)}>Toggle</button>
+
+      <AnimatePresence>
+        {show ? (
+          <motion.div
+            key="box"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.25 }}
+            style={{ width: 120, height: 120, background: "#4f46e5" }}
+          />
+        ) : null}
+      </AnimatePresence>
+    </>
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+<AnimatePresence>
+  {show ? (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    />
+  ) : null}
+</AnimatePresence>
+```
+
+## 8. Resume a retenir
+
+- React decide si le composant existe.
+- AnimatePresence permet l'animation de sortie.
+- `initial` = debut, `animate` = etat final, `exit` = sortie.
+- Sans `AnimatePresence`, l'exit ne se joue pas.
+- Toujours un `key` quand l'element disparait.

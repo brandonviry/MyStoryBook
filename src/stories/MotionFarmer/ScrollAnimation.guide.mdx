@@ -1,0 +1,73 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/ScrollAnimation/Guide" />
+
+# ScrollAnimation - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+1. React rend un bloc et un conteneur scrollable.
+2. `useScroll` lit la progression du scroll.
+3. `whileInView` declenche l'apparition du bloc.
+4. La barre de progression se remplit avec `scrollYProgress`.
+
+## 2. Concepts cles (mots simples)
+
+Imagine un livre:
+- React affiche la page.
+- Motion mesure ou tu es dans la page.
+- La barre se remplit en fonction de ta lecture.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: le conteneur et le bloc apparaissent.
+- **Update**: React re-render si les props changent.
+- **Unmount**: l'ensemble est retire du DOM.
+
+## 4. Raisonnement Framer Motion
+
+- `useScroll`: fournit une valeur dynamique de progression.
+- `whileInView`: joue l'animation quand l'element entre dans la vue.
+- `viewport`: regle quand l'animation se declenche.
+
+## 5. Erreurs et mauvaises pratiques
+
+- Oublier un conteneur scrollable -> pas de progression visible.
+- `offsetY` trop grand -> l'element arrive trop tard.
+
+## 6. Version corrigee et optimisee (simple)
+
+```tsx
+import { motion, useScroll } from "motion/react";
+import { useRef } from "react";
+
+export default function Example() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ container: ref });
+
+  return (
+    <div ref={ref} style={{ height: 400, overflowY: "auto" }}>
+      <motion.div style={{ scaleX: scrollYProgress, height: 4, background: "#0ea5e9" }} />
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true }}
+        style={{ height: 120, background: "#fde68a" }}
+      />
+    </div>
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+const { scrollYProgress } = useScroll();
+<motion.div style={{ scaleX: scrollYProgress }} />
+```
+
+## 8. Resume a retenir
+
+- React rend, Motion observe le scroll.
+- `useScroll` = progression, `whileInView` = declenchement.

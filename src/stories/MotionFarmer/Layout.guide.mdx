@@ -1,0 +1,68 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/Layout/Guide" />
+
+# Layout - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+1. React rend une carte cliquable.
+2. Un clic change l'etat `open`.
+3. La taille de la carte change.
+4. `layout` permet a Motion d'animer ce changement.
+
+## 2. Concepts cles (mots simples)
+
+Imagine une boite qui change de taille:
+- React change la taille.
+- Motion rend la transition fluide.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: la carte est affichee.
+- **Update**: `open` change -> React calcule un nouveau layout.
+- **Unmount**: la carte est retiree si on ne l'affiche plus.
+
+## 4. Raisonnement Framer Motion
+
+- `layout`: Motion mesure la taille avant et apres, puis anime la difference.
+- Sans `layout`, React change la taille instantanement (pas d'animation).
+
+## 5. Erreurs et mauvaises pratiques
+
+- Oublier `layout` -> transition brutale.
+- Changer trop d'elements a la fois -> animation brouillonne.
+
+## 6. Version corrigee et optimisee (simple)
+
+```tsx
+import { motion } from "motion/react";
+import { useState } from "react";
+
+export default function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <motion.div
+      layout
+      onClick={() => setOpen((v) => !v)}
+      style={{
+        width: open ? 300 : 150,
+        height: open ? 200 : 80,
+        background: "#4f46e5",
+      }}
+    />
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+<motion.div layout style={{ width: open ? 300 : 150 }} />
+```
+
+## 8. Resume a retenir
+
+- React change le layout, Motion l'anime.
+- `layout` = transition automatique entre tailles.

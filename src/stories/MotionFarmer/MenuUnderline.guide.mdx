@@ -1,0 +1,74 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/MenuUnderline/Guide" />
+
+# MenuUnderline - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+1. React rend une liste d'onglets.
+2. Un clic change l'onglet actif.
+3. Un underline est rendu sous l'onglet actif.
+4. `layoutId` permet a Motion de deplacer l'underline en douceur.
+
+## 2. Concepts cles (mots simples)
+
+Imagine un crayon qui glisse sous le bon mot:
+- React change quel onglet est actif.
+- Motion fait glisser la ligne.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: tous les onglets sont rendus.
+- **Update**: `active` change -> React re-render.
+- **Unmount**: l'underline ancien est retire, le nouveau apparait.
+
+## 4. Raisonnement Framer Motion
+
+- `layoutId`: lie les deux underlines comme un seul objet anime.
+- Motion mesure la position et anime le passage.
+
+## 5. Erreurs et mauvaises pratiques
+
+- Oublier `layoutId` -> underline saute au lieu de glisser.
+- Mettre des contenus differents sous le meme `layoutId` -> bug visuel.
+
+## 6. Version corrigee et optimisee (simple)
+
+```tsx
+import { motion } from "motion/react";
+import { useState } from "react";
+
+const tabs = ["Accueil", "A propos", "Contact"];
+
+export default function Example() {
+  const [active, setActive] = useState(tabs[0]);
+
+  return (
+    <div style={{ display: "flex", gap: 24 }}>
+      {tabs.map((tab) => (
+        <div key={tab} onClick={() => setActive(tab)} style={{ position: "relative" }}>
+          {tab}
+          {active === tab && (
+            <motion.div
+              layoutId="underline"
+              style={{ height: 3, background: "#4f46e5", position: "absolute", left: 0, right: 0, bottom: -6 }}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+{active === tab && <motion.div layoutId="underline" />}
+```
+
+## 8. Resume a retenir
+
+- React change l'onglet actif.
+- `layoutId` permet un deplacement fluide de l'underline.

@@ -1,0 +1,62 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/HoverEtTap/Guide" />
+
+# HoverEtTap - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+1. React rend un bloc.
+2. Framer Motion ecoute le survol (hover) et le clic (tap).
+3. Les valeurs de `scale` changent pendant l'interaction.
+
+## 2. Concepts cles (mots simples)
+
+Imagine un bouton en mousse:
+- React affiche le bouton.
+- Motion le fait gonfler au hover et s'enfoncer au tap.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: le bloc est ajoute au DOM.
+- **Update**: aucune re-render necessaire pour l'animation d'interaction.
+- **Unmount**: le bloc est retire si on ne l'affiche plus.
+
+## 4. Raisonnement Framer Motion
+
+- `whileHover`: etat applique quand la souris est dessus.
+- `whileTap`: etat applique pendant le clic.
+- `transition`: controle la vitesse.
+
+## 5. Erreurs et mauvaises pratiques
+
+- `scaleHover` trop fort -> effet agressif.
+- Oublier `cursor: pointer` -> interaction peu claire.
+
+## 6. Version corrigee et optimisee (simple)
+
+```tsx
+import { motion } from "motion/react";
+
+export default function Example() {
+  return (
+    <motion.div
+      style={{ width: 120, height: 120, background: "#0ea5e9" }}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.94 }}
+      transition={{ duration: 0.2 }}
+    />
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} />
+```
+
+## 8. Resume a retenir
+
+- React rend l'element, Motion gere l'interaction.
+- `whileHover` et `whileTap` sont des etats temporaires.

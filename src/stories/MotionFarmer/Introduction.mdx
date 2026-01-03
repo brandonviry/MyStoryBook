@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Introduction" />
+
+# Motion Farmer
+
+Motion Farmer est un espace de travail Storybook pour apprendre, tester et documenter des micro-animations avec Motion.  
+Tout est organise comme un cours pratique: un cas theorique + plusieurs cas reels, avec le code exact affiche et modifiable via les controls.
+
+## Qui suis-je
+
+Je m'appelle Viry Brandon.  
+Je suis dev web et je construis des tutoriels clairs, utiles et reutilisables pour des projets reels.
+
+## Pourquoi ce Storybook
+
+- Centraliser des exemples Motion en un seul endroit
+- Comprendre les patterns avant de les reutiliser en production
+- Documenter chaque animation avec un vrai cas d'usage
+- Garder le code visible et synchronise avec les controls
+
+## Comment lire les stories
+
+Chaque dossier suit la meme logique:
+- **Theorique**: montre la base du concept (animation pure)
+- **Pratique 1/2/3**: des interfaces proches du reel, avec contexte
+- **Show code**: le code complet qui correspond exactement a l'UI visible
+- **Controls**: change les valeurs et observe l'effet en direct
+
+## Arborescence
+
+Les stories sont regroupees par theme, par exemple:
+- `MotionFarmer/Tutorial/ScrollAnimation`
+- `MotionFarmer/Interactions/HoverEtTap`
+- `MotionFarmer/Layouts/Layout`
+
+## Regles du projet
+
+- Chaque story doit etre lisible sans contexte externe
+- Le code affiche doit correspondre a l'UI affichee
+- Les cas pratiques doivent ressembler a de vrais ecrans
+
+## Prochaines etapes
+
+Si tu veux ajouter un nouveau bloc:
+1. Cree un dossier dans `src/stories/MotionFarmer`
+2. Ajoute un composant (si besoin) + une story
+3. Ajoute **Theorique** + au moins **2 cas pratiques**
+
+---
+
+Merci d'utiliser Motion Farmer.

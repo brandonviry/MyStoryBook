@@ -1,0 +1,67 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="MotionFarmer/Tutorial/CercleScale/Guide" />
+
+# CercleScale - Guide Pedagogique
+
+## 1. Analyse pas a pas
+
+1. React rend un cercle (div avec borderRadius).
+2. Framer Motion l'affiche en scale + opacite.
+3. Les valeurs changent entre `initial` et `animate`.
+
+## 2. Concepts cles (mots simples)
+
+Imagine un point qui grossit:
+- React cree le point.
+- Motion le fait grandir et apparaitre.
+
+## 3. Raisonnement React (mount / update / unmount)
+
+- **Mount**: le cercle apparait dans le DOM.
+- **Update**: si un prop change, React re-render.
+- **Unmount**: le cercle disparait du DOM.
+
+## 4. Raisonnement Framer Motion
+
+- `initial`: etat de depart (scale petit, opacite 0).
+- `animate`: etat final (scale normal, opacite 1).
+- `transition`: vitesse d'apparition.
+
+## 5. Erreurs et mauvaises pratiques
+
+- Oublier `borderRadius: 999px` -> ce n'est plus un cercle.
+- `scaleFrom` trop grand -> pas d'effet visible.
+
+## 6. Version corrigee et optimisee (simple)
+
+```tsx
+import { motion } from "motion/react";
+
+export default function Example() {
+  return (
+    <motion.div
+      style={{
+        width: 48,
+        height: 48,
+        borderRadius: 999,
+        background: "#22c55e",
+      }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+    />
+  );
+}
+```
+
+## 7. Exemple minimal fonctionnel
+
+```tsx
+<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} />
+```
+
+## 8. Resume a retenir
+
+- `initial` = debut, `animate` = arrivee.
+- React rend le cercle, Motion gere la transition.
