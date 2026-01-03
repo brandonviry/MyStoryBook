@@ -12,6 +12,12 @@ const config: StorybookConfig = {
     "@storybook/addon-docs",
     "@storybook/addon-onboarding"
   ],
-  "framework": "@storybook/react-vite"
+  "framework": "@storybook/react-vite",
+  "staticDirs": ["../public"],
+ // Assurez-vous que ce dossier contient votre icône
+  managerHead: (head) => `
+    ${head}
+    <link rel="icon" href="/brand-logo.svg" />
+  `,
 };
 export default config;

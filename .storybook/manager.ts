@@ -3,9 +3,10 @@ import { create } from "storybook/theming/create";
 
 addons.setConfig({
   theme: create({
-    brandTitle: "Motion Farmer",
+    base: "dark",
+    brandTitle: "Mon Storybook - VIRY Brandon",
     brandUrl: "/",
-    brandImage: "/brand-logo.svg",
+    brandImage: "/brand-logo.png",
     brandTarget: "_self",
   }),
 });
